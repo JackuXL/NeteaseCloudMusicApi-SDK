@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'cn.wearbbs'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.alibaba:fastjson:1.2.76'
+}
+
+test {
+    useJUnitPlatform()
+}
