@@ -1,12 +1,12 @@
-# 网易云音乐API - SDK
+# NeteaseCloudMusicApi-SDK
 
-[English](https://github.com/JackuXL/NeteaseCloudMusicApi-SDK/blob/master/README.md) | 简体中文
+English | [简体中文](https://github.com/JackuXL/NeteaseCloudMusicApi-SDK/blob/master/readme_zh_cn.md)
 
-网易云音乐API JavaSDK
+A Java SDK For NeteaseCloudMusicApi
 
-待办事项:
+Todos:
 
-- [x] 通过手机号、邮箱、二维码登录
-- [ ] 歌单
-- [ ] 音乐信息
+- [x] Login By PhoneNumber, QRCode and email.
+- [ ] PlayList
+- [ ] MusicDetail
 - [ ] ……
