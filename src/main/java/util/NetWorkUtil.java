@@ -1,11 +1,11 @@
 package util;
 
-import java.io.IOException;
-import java.util.Objects;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author JackuXL
@@ -14,30 +14,32 @@ public class NetWorkUtil {
     public static String domain;
 
     /**
-     * è®¾ç½®ä¸»åŸŸå
-     * æ·»åŠ åœ¨è¯·æ±‚åœ°å€å‰
-     * @param domain ä¸»åŸŸåï¼ˆæ ¼å¼ï¼šhttp(s)://your.domain/ï¼‰
+     * ÉèÖÃÖ÷ÓòÃû
+     * Ìí¼ÓÔÚÇëÇóµØÖ·Ç°
+     *
+     * @param domain Ö÷ÓòÃû£¨¸ñÊ½£ºhttp(s)://example.com£©
      */
-    public static void setDomain(String domain){
+    public static void setDomain(String domain) {
         NetWorkUtil.domain = domain;
     }
 
     /**
-     * GETè¯·æ±‚
-     * @param url åœ°å€ï¼ˆåˆ é™¤ä¸»åŸŸåï¼‰
-     * @param cookie Cookieï¼ˆå¯ä¸ºNullï¼‰
-     * @return è¯·æ±‚ç»“æœ
+     * GETÇëÇó
+     *
+     * @param url    µØÖ·£¨É¾³ıÖ÷ÓòÃû£©
+     * @param cookie Cookie£¨¿ÉÎªNull£©
+     * @return ÇëÇó½á¹û
      */
     public static String sendByGetUrl(String url, String cookie) {
-        if(cookie==null){
+        if (cookie == null) {
             cookie = "";
         }
         String result;
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         Request request;
         request = new Request.Builder()
-                .addHeader("Cookie",cookie)
-                .url(NetWorkUtil.domain+url)
+                .addHeader("Cookie", cookie)
+                .url(NetWorkUtil.domain + url)
                 .build();
         Response response;
         try {
