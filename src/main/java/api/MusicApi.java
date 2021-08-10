@@ -148,11 +148,7 @@ public class MusicApi {
      * @return ÊÇ·ñ³É¹¦
      */
     public Boolean likeMusic(String id, Boolean like) {
-        if (like) {
-            return JSON.parseObject(NetWorkUtil.sendByGetUrl("/like?id=" + id, cookie)).getInteger("code") == 200;
-        } else {
-            return JSON.parseObject(NetWorkUtil.sendByGetUrl("/like?like=false&id=" + id, cookie)).getInteger("code") == 200;
-        }
+        return JSON.parseObject(NetWorkUtil.sendByGetUrl(String.format("/like?id=%s&timestamp=%s&like=%b", id, System.currentTimeMillis(),like), cookie)).getInteger("code") == 200;
     }
 
     /**
