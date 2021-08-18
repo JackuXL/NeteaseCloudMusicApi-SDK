@@ -1,9 +1,13 @@
 package api;
 
+import cn.jackuxl.entity.Music;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import util.NetWorkUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MusicPanApi {
     private final String cookie;
@@ -12,9 +16,9 @@ public class MusicPanApi {
         this.cookie = cookie;
     }
 
-    public JSONArray getMusicList() {
+    public List<Music> getMusicList() {
         JSONArray data = JSON.parseObject(NetWorkUtil.sendByGetUrl("/user/cloud", cookie)).getJSONArray("data");
-        return data == null ? new JSONArray() : data;
+        return data == null ? new ArrayList<>() : Music.toMusicArrayList(data);
     }
 
     /**
@@ -23,8 +27,8 @@ public class MusicPanApi {
      * @param id 音乐id
      * @return 音乐信息
      */
-    public JSONArray getMusicDetail(String id) {
-        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/user/cloud/detail?id=" + id, cookie)).getJSONArray("songs");
+    public List<Music> getMusicDetail(String id) {
+        return Music.toMusicArrayList(JSON.parseObject(NetWorkUtil.sendByGetUrl("/user/cloud/detail?id=" + id, cookie)).getJSONArray("songs"));
     }
 
     /**
@@ -33,7 +37,7 @@ public class MusicPanApi {
      * @param ids 音乐id列表
      * @return 音乐信息
      */
-    public JSONArray getMusicDetail(String[] ids) {
+    public List<Music> getMusicDetail(String[] ids) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < ids.length; i++) {
             stringBuilder.append(ids[i]);
@@ -41,27 +45,27 @@ public class MusicPanApi {
                 stringBuilder.append(",");
             }
         }
-        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/user/cloud/detail?id=" + stringBuilder, cookie)).getJSONArray("songs");
+        return Music.toMusicArrayList(JSON.parseObject(NetWorkUtil.sendByGetUrl("/user/cloud/detail?id=" + stringBuilder, cookie)).getJSONArray("songs"));
     }
 
     /**
      * 删除云盘音乐
      *
-     * @param id 音乐id
+     * @param music 音乐对象
      * @return 状态码
      */
-    public int deleteMusic(String id) {
-        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/user/cloud/del?id=" + id, cookie)).getInteger("code");
+    public int deleteMusic(Music music) {
+        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/user/cloud/del?id=" + music.getId(), cookie)).getInteger("code");
     }
 
     /**
      * 获取音乐链接
      *
-     * @param id 音乐id
+     * @param music 音乐对象
      * @return 音乐链接
      */
-    public String getMusicUrl(String id) {
-        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/song/url?id=" + id, cookie))
+    public String getMusicUrl(Music music) {
+        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/song/url?id=" + music.getId(), cookie))
                 .getJSONArray("data").getJSONObject(0).getString("url");
 
     }

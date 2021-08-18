@@ -1,9 +1,13 @@
 package api;
 
+import cn.jackuxl.entity.Music;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import util.NetWorkUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MusicApi {
     private final String cookie;
@@ -12,13 +16,14 @@ public class MusicApi {
         this.cookie = cookie;
     }
 
+
     /**
      * 获取私人FM
      *
      * @return FM返回的音乐列表
      */
-    public JSONArray getFM() {
-        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/personal_fm", cookie)).getJSONArray("data");
+    public List<Music> getFM() {
+        return Music.toMusicArrayList(JSON.parseObject(NetWorkUtil.sendByGetUrl("/personal_fm", cookie)).getJSONArray("data"));
     }
 
     /**
@@ -27,12 +32,12 @@ public class MusicApi {
      * @param keyword 关键词
      * @return 搜索结果
      */
-    public JSONArray searchMusic(String keyword) {
+    public List<Music> searchMusic(String keyword) {
         JSONObject content = JSON.parseObject(NetWorkUtil.sendByGetUrl("/search?keywords=" + keyword, cookie));
         if (content.getJSONObject("result") == null) {
-            return new JSONArray();
+            return new ArrayList<>();
         }
-        return content.getJSONObject("result").getJSONArray("songs");
+        return Music.toMusicArrayList(content.getJSONObject("result").getJSONArray("songs"));
     }
 
     /**
@@ -54,8 +59,8 @@ public class MusicApi {
      * @param id 音乐id
      * @return 音乐信息
      */
-    public JSONArray getMusicDetail(String id) {
-        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/song/detail?ids=" + id, cookie)).getJSONArray("songs");
+    public List<Music> getMusicDetail(String id) {
+        return Music.toMusicArrayList(JSON.parseObject(NetWorkUtil.sendByGetUrl("/song/detail?ids=" + id, cookie)).getJSONArray("songs"));
     }
 
     /**
@@ -64,7 +69,7 @@ public class MusicApi {
      * @param ids 音乐id列表
      * @return 音乐信息
      */
-    public JSONArray getMusicDetail(String[] ids) {
+    public List<Music> getMusicDetail(String[] ids) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < ids.length; i++) {
             stringBuilder.append(ids[i]);
@@ -72,7 +77,7 @@ public class MusicApi {
                 stringBuilder.append(",");
             }
         }
-        return JSON.parseObject(NetWorkUtil.sendByGetUrl("/song/detail?ids=" + stringBuilder, cookie)).getJSONArray("songs");
+        return Music.toMusicArrayList(JSON.parseObject(NetWorkUtil.sendByGetUrl("/song/detail?ids=" + stringBuilder, cookie)).getJSONArray("songs"));
     }
 
     /**
