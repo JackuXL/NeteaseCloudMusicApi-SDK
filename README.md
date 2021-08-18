@@ -4,9 +4,10 @@
 
 网易云音乐API JavaSDK
 
-待办事项:
+## 开始使用
 
-- [x] 通过手机号、邮箱、二维码登录
-- [ ] 歌单
-- [ ] 音乐信息
-- [ ] ……
+```java
+NetWorkUtil.setDomain("https://your.music.api");
+MusicApi api = new MusicApi("cookie");
+```
+
