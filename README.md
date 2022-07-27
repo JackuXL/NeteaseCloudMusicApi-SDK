@@ -1,3 +1,5 @@
+# ⚠️ 新的SDK已在开发中，大部分API完成后将会开源，如果有兴趣参与欢迎邮件 jackuxl2019@gmail.com
+
 # 网易云音乐API - SDK
 
 简体中文 | [English](https://github.com/JackuXL/NeteaseCloudMusicApi-SDK/blob/master/README_EN.md)
